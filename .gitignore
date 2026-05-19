@@ -1,0 +1,16 @@
+node_modules/
+generate-*.js
+composite-*.js
+check-*.js
+preview.js
+package.json
+package-lock.json
+professional_headshot*.png
+wide_canvas.png
+e8450311acb7b3a329c77c5651435d0d.jpg
+c02427e0df42e20bab693badf6fbfe9e.jpg
+c5bf6da343ad4774fa4f3f89cdfbeb30.jpg
+stitched_2_3_4.jpg
+stitched_2_4.jpg
+input*.json
+result*.json
