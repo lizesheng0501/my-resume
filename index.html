@@ -338,6 +338,136 @@
     opacity: 0;
   }
 
+  /* ======== Detail stages (4-6) ======== */
+  .detail-stage {
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    z-index: 20;
+    background: #000;
+  }
+
+  .detail-page {
+    display: flex;
+    height: 100%;
+    position: relative;
+    z-index: 21;
+  }
+
+  .detail-photo {
+    flex: 1 1 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+  }
+
+  .detail-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .detail-text {
+    flex: 1 1 55%;
+    padding: 60px 50px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .detail-text h2 {
+    font-size: clamp(24px, 3.5vw, 42px);
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .detail-subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 2px;
+    margin-bottom: 36px;
+  }
+
+  .detail-entry {
+    margin-bottom: 24px;
+  }
+
+  .detail-entry h3 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+
+  .detail-entry h3 span {
+    font-weight: 400;
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    margin-left: 8px;
+  }
+
+  .detail-entry p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 6px;
+  }
+
+  .detail-entry ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .detail-entry li {
+    font-size: 12px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    padding-left: 12px;
+    position: relative;
+    margin-bottom: 3px;
+  }
+
+  .detail-entry li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .detail-entry strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .detail-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+  }
+
+  .detail-info span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  @media (max-width: 768px) {
+    .detail-page { flex-direction: column; }
+    .detail-photo { flex: none; height: 40vh; }
+    .detail-text { padding: 30px 20px; justify-content: flex-start; }
+  }
+
   /* ======== State classes ======== */
   .split-container.state-1 {
     width: 80vw;
@@ -387,9 +517,113 @@
 <section class="stage" data-state="1"></section>
 <section class="stage" data-state="2"></section>
 <section class="stage" data-state="3"></section>
+<section class="detail-stage" data-state="4">
+  <div class="detail-page">
+    <div class="detail-photo"><img src="part_1.jpg" alt=""></div>
+    <div class="detail-text">
+      <h2>项目经历</h2>
+      <p class="detail-subtitle">PROJECT EXPERIENCE</p>
+      <div class="detail-entry">
+        <h3>个人作品集搭建 <span>AI 驱动 · 独立开发</span></h3>
+        <p>全程使用 AI（Cloud Code）驱动开发，零编程基础独立完成个人作品网站的设计、开发、部署与上线。通过自然语言指令控制 AI 生成页面结构、交互动效与响应式布局，实现滚动动画、卡片翻转、点击展开等复杂前端效果。</p>
+        <ul>
+          <li>人机协作开发模式，用自然语言替代代码，验证 AI 驱动前端开发的可行性与效率</li>
+          <li>网站集中展示电商创业案例、项目成果及个人能力证明</li>
+        </ul>
+      </div>
+      <div class="detail-entry">
+        <h3>抖音电商手机壳盲盒创业 <span>自主运营 · 零广告预算</span></h3>
+        <ul>
+          <li>设计 29.9 元引流款与 49.9 元利润款盲盒，单套成本 15 元，厂家代发零库存</li>
+          <li>纯自然流量获客，日均出单 50 单，持续 3 个月，复购率 70% 以上</li>
+        </ul>
+      </div>
+      <div class="detail-entry">
+        <h3>宿舍小卖铺创业项目 <span>自主创业 · 夜间零售</span></h3>
+        <ul>
+          <li>聚焦夜间（21:00–01:00）食品零售，即食零食、主食、饮料，快速配送与加热服务</li>
+          <li>首月订单 323 单，复购率 67%，销售额 2,177 元，高峰配送 ≤ 8 分钟</li>
+        </ul>
+      </div>
+      <div class="detail-entry">
+        <h3>私人教练 <span>销售转化与客户运营</span></h3>
+        <ul>
+          <li>从零搭建私教业务，线上获客+线下推广，1v1 定制训练与饮食方案</li>
+          <li>线索→付费转化率 40%，服务 32 名客户，满意度 100%，累计成交超 2 万元</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-stage" data-state="5">
+  <div class="detail-page">
+    <div class="detail-photo"><img src="part_2.jpg" alt=""></div>
+    <div class="detail-text">
+      <h2>实习经历</h2>
+      <p class="detail-subtitle">INTERNSHIP EXPERIENCE</p>
+      <div class="detail-entry">
+        <h3>网易 · 用户运营实习生</h3>
+        <ul>
+          <li>负责网易蜜蜂产品推广，在多平台发布图文内容引流，引导用户下载</li>
+          <li>负责平台内用户运营，内容日均浏览量约 500，累计拉新超 50 人</li>
+        </ul>
+      </div>
+      <div class="detail-entry">
+        <h3>京东集团 · 渠道销售实习生</h3>
+        <ul>
+          <li>协同招商部门拓展数码商家资源，推动 10 家数码商家成功入驻</li>
+          <li>负责京东旗下软件区域推广，提升推广人数、SKU 动销率与门店业绩</li>
+          <li>制定门店推广活动，优化 SKU 组合，通过资源置换降低推广成本</li>
+          <li>日均推广 6 人，SKU 复购率 40%，门店销售业绩提升 6%</li>
+        </ul>
+      </div>
+      <div class="detail-entry">
+        <h3>南京乐道汽车 · 汽车销售实习生</h3>
+        <ul>
+          <li>快速掌握产品知识，在与 Model Y 等竞品竞争中完成线索获取与转化</li>
+          <li>独立讲解产品，多渠道拓客，每日完成留资目标</li>
+          <li>制定竞品对比话术，1v1 挖掘用户需求，日均留资 4 条，提升试驾转化率</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-stage" data-state="6">
+  <div class="detail-page">
+    <div class="detail-photo"><img src="part_3.jpg" alt=""></div>
+    <div class="detail-text">
+      <h2>教育经历</h2>
+      <p class="detail-subtitle">EDUCATION</p>
+      <div class="detail-entry">
+        <h3>河北传媒学院 <span>播音与主持艺术专业</span></h3>
+      </div>
+      <div class="detail-info">
+        <span>李泽晟 · 男 · 2005/05/01</span>
+        <span>电话：19951070689</span>
+        <span>邮箱：1492762830@qq.com</span>
+      </div>
+      <div class="detail-entry">
+        <h3>竞赛荣誉</h3>
+        <ul>
+          <li>浙江传媒学院国际大学生配音大赛 <strong>一等奖</strong></li>
+          <li>上海戏剧学院讲好中国故事大赛 <strong>第四名</strong></li>
+          <li>河北大学新声杯大学生语言文化艺术节 <strong>二等奖</strong></li>
+        </ul>
+      </div>
+      <div class="detail-entry">
+        <h3>演艺经历</h3>
+        <ul>
+          <li>《大河之北的交响》朗诵会饰演太子丹，河北卫视热播</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Fixed images -->
-<div class="image-wrapper">
+<div class="image-wrapper" id="imageWrapper">
   <div class="split-container" id="splitContainer">
     <!-- Left -->
     <div class="split-item left">
@@ -537,6 +771,7 @@
 <script>
 (function() {
   const container = document.getElementById('splitContainer');
+  const imageWrapper = document.getElementById('imageWrapper');
   const hint = document.getElementById('hint');
   const introText = document.getElementById('introText');
   const introStage = document.querySelector('.intro-stage');
@@ -566,12 +801,19 @@
     flipTimers.push(setTimeout(() => cardRight.classList.add('flipped'), 305));
   }
 
-  // Observe ALL sections including intro
-  const allSections = document.querySelectorAll('.intro-stage, .stage');
+  // Observe ALL sections including intro and detail stages
+  const allSections = document.querySelectorAll('.intro-stage, .stage, .detail-stage');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const state = parseInt(entry.target.dataset.state);
+
+        // Show/hide fixed cards based on state
+        if (state >= 4) {
+          imageWrapper.style.display = 'none';
+        } else {
+          imageWrapper.style.display = '';
+        }
 
         // Stage 0: intro — hide cards
         if (state === 0) {
