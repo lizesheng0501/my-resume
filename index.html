@@ -688,7 +688,7 @@
           <div class="card-label">电商创业</div>
         </div>
       </div>
-      <div class="selector-hint">🖱 滚轮切换 · 左键放大 · 右键还原</div>
+      <div class="selector-hint">🖱 滚轮切换 · 左键放大/还原</div>
       <div class="detail-photo-info">
         <div class="name">李泽晟</div>
         <div class="info-line">项目经历 <span>·</span> PROJECTS</div>
@@ -1009,8 +1009,11 @@
         setActive(idx);
         return;
       }
-      // Left click on active = zoom
-      if (!zoomed) {
+      // Toggle zoom on left click
+      if (zoomed) {
+        card.classList.remove('zoomed');
+        zoomed = false;
+      } else {
         card.classList.add('zoomed');
         zoomed = true;
       }
@@ -1018,10 +1021,6 @@
 
     panel.addEventListener('contextmenu', function(e) {
       e.preventDefault();
-      if (zoomed) {
-        cards[activeIndex].classList.remove('zoomed');
-        zoomed = false;
-      }
     });
   }
 })();
