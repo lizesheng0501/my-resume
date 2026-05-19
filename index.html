@@ -105,6 +105,12 @@
     justify-content: center;
     pointer-events: none;
     z-index: 10;
+    opacity: 1;
+    transition: opacity 0.6s cubic-bezier(0.42, 0, 0.58, 1);
+  }
+  .image-wrapper.fade-out {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .split-container {
@@ -330,7 +336,7 @@
     scroll-snap-stop: always;
     position: relative;
     z-index: 20;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.5);
   }
 
   .detail-page {
@@ -338,6 +344,16 @@
     height: 100%;
     position: relative;
     z-index: 21;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.42, 0, 0.58, 1),
+                transform 0.8s cubic-bezier(0.42, 0, 0.58, 1);
+    transition-delay: 0.15s;
+  }
+
+  .detail-stage.visible .detail-page {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* ---- Left panel: game-like selector ---- */
@@ -1033,12 +1049,22 @@
       if (entry.isIntersecting) {
         const state = parseInt(entry.target.dataset.state);
 
-        // Show/hide fixed cards based on state
+        // Crossfade: fade out cards, fade in detail pages
         if (state >= 4) {
-          imageWrapper.style.display = 'none';
+          imageWrapper.classList.add('fade-out');
         } else {
-          imageWrapper.style.display = '';
+          imageWrapper.classList.remove('fade-out');
         }
+
+        // Add visible class to detail stages for fade-in
+        document.querySelectorAll('.detail-stage').forEach(ds => {
+          const dsState = parseInt(ds.dataset.state);
+          if (dsState === state) {
+            ds.classList.add('visible');
+          } else {
+            ds.classList.remove('visible');
+          }
+        });
 
         // Stage 0: intro — hide cards
         if (state === 0) {
