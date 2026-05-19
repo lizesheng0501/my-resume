@@ -360,6 +360,29 @@
     border-radius: 4px;
   }
 
+  .detail-photo img.photo-rounded {
+    aspect-ratio: auto;
+    border-radius: 12px;
+  }
+
+  /* Fade-in animation for text */
+  .fade-in-text {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .detail-photo-info {
     text-align: center;
   }
@@ -555,53 +578,61 @@
 <section class="detail-stage" data-state="4">
   <div class="detail-page">
     <div class="detail-photo">
-      <img src="part_1.jpg" alt="">
+      <img src="屏幕截图 2026-05-19 212757.png" alt="" class="photo-rounded">
       <div class="detail-photo-info">
         <div class="name">李泽晟</div>
         <div class="info-line">项目经历 <span>·</span> PROJECTS</div>
       </div>
     </div>
-    <div class="detail-text">
+    <div class="detail-text fade-in-text">
       <h2>项目经历</h2>
       <p class="detail-subtitle">PROJECT EXPERIENCE</p>
 
       <div class="detail-entry">
-        <h3><span>01</span> 个人作品集搭建</h3>
-        <div class="company">AI 驱动 · 独立开发</div>
-        <p>全程使用 AI（Cloud Code）驱动开发，零编程基础独立完成个人作品网站的设计、开发、部署与上线。通过自然语言指令控制 AI 生成页面结构、交互动效与响应式布局。</p>
+        <h3><span>01</span> AI 工作流搭建 · 小程序开发</h3>
+        <div class="company">Claude · 微信小程序 · 独立开发</div>
+        <p>熟练使用 Claude / Cloud Code 等 AI 工具建立高效开发工作流。独立使用 AI 开发微信小程序「日成日历」，集日历、健身追踪与饮食记录于一体，涵盖 130+ 健身动作数据库与 220+ 食物数据库，支持 MET 值卡路里计算与 BMR 个性化推荐，所有数据本地存储，无需后端。</p>
         <ul>
-          <li>人机协作开发模式，用自然语言替代代码，验证 AI 驱动前端开发的可行性与效率</li>
-          <li>实现滚动动画、卡片翻转、点击展开等复杂前端效果</li>
+          <li>通过自然语言指令驱动 AI 完成产品规划、功能拆解、UI 设计与代码实现全流程</li>
+          <li>验证了 AI 驱动全栈开发的可行性，具备快速将想法转化为可运行产品的能力</li>
         </ul>
       </div>
 
       <div class="detail-entry">
-        <h3><span>02</span> 抖音电商手机壳盲盒创业</h3>
-        <div class="company">自主运营 · 零广告预算</div>
+        <h3><span>02</span> 个人作品集网站搭建</h3>
+        <div class="company">Cloud Code · 前端开发 · 部署上线</div>
+        <p>全程使用 AI（Cloud Code）驱动，零编程基础独立完成个人作品网站的设计、开发与部署。通过自然语言控制 AI 生成页面结构、交互动效（滚动动画、卡片翻转、点击展开）、响应式布局与星空银河视觉背景，并成功部署至 GitHub Pages 公开上线。</p>
         <ul>
-          <li>设计 <span class="highlight">29.9 元引流款</span> 与 <span class="highlight">49.9 元利润款</span> 盲盒，单套成本 15 元</li>
-          <li>厂家代发模式，零库存低风险，纯自然流量获客</li>
-          <li>日均出单 <span class="highlight">50 单</span>，持续 3 个月，复购率 <span class="highlight">70%+</span></li>
+          <li>自主完成 UI 设计风格定调、内容排版与移动端适配，兼具作品集与简历功能</li>
+          <li>人机协作模式：用自然语言替代代码，验证 AI 驱动前端开发的可行性与效率</li>
         </ul>
       </div>
 
       <div class="detail-entry">
-        <h3><span>03</span> 宿舍小卖铺创业项目</h3>
-        <div class="company">自主创业 · 夜间零售</div>
+        <h3><span>03</span> AI 选品定价 · 电商运营优化</h3>
+        <div class="company">抖音电商 · 数据驱动 · 利润优化</div>
+        <p>借助 AI 进行市场分析与选品决策，优化盲盒产品定价策略与 SKU 组合。通过 AI 辅助数据分析，精准定位引流款与利润款价格带，结合成本控制与复购数据持续迭代定价模型，间接推动利润率提升。</p>
+        <ul>
+          <li>AI 辅助选品 + 定价优化，单套成本控制在 15 元，利润率提升约 <span class="highlight">40%</span></li>
+          <li>零广告预算，纯自然流量，日均出单 50 单，复购率 <span class="highlight">70%+</span></li>
+        </ul>
+      </div>
+
+      <div class="detail-entry">
+        <h3><span>04</span> 宿舍小卖铺 · 私域运营</h3>
+        <div class="company">自主创业 · 夜间零售 · 私域复购</div>
         <ul>
           <li>聚焦夜间（21:00–01:00）食品零售，即食零食、主食、饮料，快速配送 + 加热服务</li>
-          <li>首月订单 <span class="highlight">323 单</span>，复购率 67%，销售额 <span class="highlight">2,177 元</span></li>
-          <li>高峰配送 ≤ 8 分钟，覆盖 3 层宿舍楼社群，夜间活跃度超 60%</li>
+          <li>首月订单 <span class="highlight">323 单</span>，复购率 67%，销售额 <span class="highlight">2,177 元</span>，高峰配送 ≤ 8 分钟</li>
         </ul>
       </div>
 
       <div class="detail-entry">
-        <h3><span>04</span> 私人教练</h3>
-        <div class="company">销售转化与客户运营</div>
+        <h3><span>05</span> 私人教练 · 销售转化</h3>
+        <div class="company">线上获客 · 1v1 定制 · 客户运营</div>
         <ul>
           <li>从零搭建私教业务，线上内容获客 + 线下推广，1v1 定制训练与饮食方案</li>
-          <li>线索→付费转化率 <span class="highlight">40%</span>，服务 <span class="highlight">32 名</span> 付费客户，满意度 100%</li>
-          <li>老客转介绍率超 30%，累计成交金额超 <span class="highlight">2 万元</span></li>
+          <li>线索→付费转化率 <span class="highlight">40%</span>，服务 <span class="highlight">32 名</span> 付费客户，满意度 100%，累计成交超 <span class="highlight">2 万元</span></li>
         </ul>
       </div>
     </div>
