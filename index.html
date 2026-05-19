@@ -431,30 +431,6 @@
     pointer-events: none;
   }
 
-  /* Enlarged state: pop out to center of screen */
-  .selector-card.zoomed {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) scale(1.8) !important;
-    z-index: 1000 !important;
-    opacity: 1 !important;
-    filter: none !important;
-    width: 50vw !important;
-    max-width: 700px !important;
-  }
-  .selector-card.zoomed .card-glow {
-    opacity: 1;
-    box-shadow: 0 0 40px rgba(120,160,255,0.8),
-                0 0 80px rgba(120,160,255,0.4),
-                0 0 140px rgba(120,160,255,0.2);
-  }
-  .selector-card.zoomed .card-label {
-    font-size: 16px;
-    padding: 8px 24px;
-    bottom: 20px;
-  }
-
   .selector-hint {
     font-size: 12px;
     color: rgba(255,255,255,0.3);
@@ -701,7 +677,7 @@
           <div class="card-label">电商创业</div>
         </div>
       </div>
-      <div class="selector-hint">🖱 滚轮切换 · 左键放大/还原</div>
+      <div class="selector-hint">🖱 滚轮切换图片</div>
       <div class="detail-photo-info">
         <div class="name">李泽晟</div>
         <div class="info-line">项目经历 <span>·</span> PROJECTS</div>
@@ -986,49 +962,28 @@
   const cards = document.querySelectorAll('.selector-card');
   const textPanels = document.querySelectorAll('.text-panel');
   let activeIndex = 0;
-  let zoomed = false;
   const totalCards = cards.length;
 
   function setActive(index) {
     if (index === activeIndex && cards[index].classList.contains('active')) return;
     activeIndex = index;
     cards.forEach((card, i) => {
-      card.classList.remove('active', 'inactive', 'zoomed');
+      card.classList.remove('active', 'inactive');
       if (i === index) card.classList.add('active');
       else card.classList.add('inactive');
     });
     textPanels.forEach((panel, i) => {
       panel.classList.toggle('active', i === index);
     });
-    zoomed = false;
   }
 
   if (panel) {
     panel.addEventListener('wheel', function(e) {
       e.preventDefault();
-      if (zoomed) return;
       if (e.deltaY > 0) {
         setActive((activeIndex + 1) % totalCards);
       } else {
         setActive((activeIndex - 1 + totalCards) % totalCards);
-      }
-    });
-
-    panel.addEventListener('click', function(e) {
-      const card = e.target.closest('.selector-card');
-      if (!card) return;
-      const idx = parseInt(card.dataset.index);
-      if (idx !== activeIndex) {
-        setActive(idx);
-        return;
-      }
-      // Toggle zoom on left click
-      if (zoomed) {
-        card.classList.remove('zoomed');
-        zoomed = false;
-      } else {
-        card.classList.add('zoomed');
-        zoomed = true;
       }
     });
 
