@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教育经历 — 李泽晟</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    color: #fff;
+    font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1px 1px at 30% 25%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 85% 50%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 15% 60%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 40% 70%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1px 1px at 80% 90%, rgba(255,255,255,0.5), transparent);
+  }
+
+  body::after {
+    content: '';
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 200vh;
+    pointer-events: none; z-index: 0;
+    opacity: 0.35;
+    background:
+      radial-gradient(ellipse 60% 40% at 30% 35%, rgba(30,60,120,0.6), transparent 70%),
+      radial-gradient(ellipse 50% 35% at 65% 55%, rgba(80,20,100,0.5), transparent 70%),
+      radial-gradient(ellipse 40% 30% at 50% 20%, rgba(20,40,90,0.4), transparent 70%),
+      radial-gradient(ellipse 55% 45% at 20% 70%, rgba(60,15,80,0.4), transparent 70%),
+      radial-gradient(ellipse 70% 50% at 45% 50%, rgba(100,30,130,0.15), transparent 60%);
+  }
+
+  .page {
+    position: relative; z-index: 1;
+    display: flex; min-height: 100vh;
+  }
+
+  .photo-panel {
+    flex: 1 1 50%;
+    min-height: 100vh;
+    position: sticky; top: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: #0a0a0a;
+  }
+
+  .photo-panel img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+
+  .content-panel {
+    flex: 1 1 50%;
+    padding: 80px 60px;
+    display: flex; flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    font-size: 13px; letter-spacing: 1px;
+    margin-bottom: 60px;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: #fff; }
+
+  .content-panel h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300; letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+
+  .content-panel .subtitle {
+    font-size: 14px; color: rgba(255,255,255,0.4);
+    letter-spacing: 2px; margin-bottom: 50px;
+  }
+
+  .section {
+    margin-bottom: 40px;
+  }
+
+  .section h2 {
+    font-size: 16px; font-weight: 600;
+    letter-spacing: 2px; margin-bottom: 12px;
+    color: #fff;
+  }
+
+  .section .tag {
+    font-size: 11px; color: rgba(255,255,255,0.4);
+    margin-bottom: 8px; letter-spacing: 1px;
+  }
+
+  .section p {
+    font-size: 13px; line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+
+  .section ul {
+    list-style: none; padding: 0;
+  }
+
+  .section li {
+    font-size: 13px; line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+    padding-left: 14px; position: relative;
+    margin-bottom: 4px;
+  }
+
+  .section li::before {
+    content: '·'; position: absolute; left: 0;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .metric {
+    display: inline-block;
+    color: #fff; font-weight: 600;
+  }
+
+  /* Info card */
+  .info-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+
+  .info-card .row {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    line-height: 2;
+  }
+
+  .info-card .label {
+    color: rgba(255,255,255,0.35);
+    margin-right: 4px;
+  }
+
+  .page-nav {
+    display: flex; gap: 20px; margin-top: 60px; padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .page-nav a {
+    color: rgba(255,255,255,0.4); text-decoration: none;
+    font-size: 12px; letter-spacing: 2px;
+    transition: color 0.3s;
+  }
+  .page-nav a:hover, .page-nav a.active { color: #fff; }
+
+  @media (max-width: 768px) {
+    .page { flex-direction: column; }
+    .photo-panel { position: relative; min-height: 50vh; flex: none; }
+    .content-panel { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="photo-panel">
+    <img src="part_3.jpg" alt="教育经历">
+  </div>
+
+  <div class="content-panel">
+    <a href="index.html" class="back-link">← 返回主页</a>
+
+    <h1>教育经历</h1>
+    <p class="subtitle">EDUCATION</p>
+
+    <div class="section">
+      <h2>河北传媒学院</h2>
+      <p class="tag">播音与主持艺术专业</p>
+    </div>
+
+    <div class="info-card">
+      <div class="row">
+        <span><span class="label">姓名</span>李泽晟</span>
+        <span><span class="label">性别</span>男</span>
+        <span><span class="label">出生</span>2005/05/01</span>
+      </div>
+      <div class="row">
+        <span><span class="label">电话</span>19951070689</span>
+        <span><span class="label">邮箱</span>1492762830@qq.com</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>竞赛荣誉</h2>
+      <ul>
+        <li><span class="metric">一等奖</span> — 浙江传媒学院国际大学生配音大赛</li>
+        <li><span class="metric">第四名</span> — 上海戏剧学院讲好中国故事大赛</li>
+        <li><span class="metric">二等奖</span> — 河北大学新声杯大学生语言文化艺术节</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>演艺经历</h2>
+      <ul>
+        <li>《大河之北的交响》朗诵会饰演太子丹，河北卫视热播</li>
+        <li>具备扎实的舞台表现力、声音塑造力与镜头感，可驾驭多种类型角色</li>
+      </ul>
+    </div>
+
+    <div class="page-nav">
+      <a href="projects.html">项目经历</a>
+      <a href="internship.html">实习经历</a>
+      <a href="#" class="active">教育经历</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
