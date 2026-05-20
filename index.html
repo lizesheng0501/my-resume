@@ -329,92 +329,7 @@
     opacity: 0;
   }
 
-  /* ======== Tutorial overlay ======== */
-  .tutorial-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.85);
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-  }
-
-  .tutorial-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .tutorial-overlay.fade-out-tutorial {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-  }
-
-  .tutorial-content {
-    text-align: center;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
-  }
-
-  .tutorial-overlay.visible .tutorial-content {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .tutorial-cols {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-    margin-bottom: 80px;
-  }
-
-  .tutorial-col {
-    text-align: center;
-  }
-
-  .tutorial-col p {
-    font-size: 27px;
-    color: rgba(255,255,255,0.8);
-    letter-spacing: 3px;
-    line-height: 1.8;
-  }
-
-  .tutorial-col .tutorial-sub {
-    font-size: 22px;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 2px;
-  }
-
-  .tutorial-icon {
-    font-size: 82px;
-    margin-bottom: 34px;
-  }
-
-  .tutorial-divider {
-    width: 1px;
-    height: 140px;
-    background: rgba(255,255,255,0.12);
-  }
-
-  .tutorial-press {
-    font-size: 22px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 3px;
-    animation: blink 2s ease-in-out infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.7; }
-  }
-
-  /* ======== Detail stages (5-7) ======== */
+  /* ======== Detail stages (4-6) ======== */
   .detail-stage {
     height: 100vh;
     scroll-snap-align: start;
@@ -879,25 +794,6 @@
     </div>
   </div>
 
-  <!-- Tutorial overlay (inside project experience) -->
-  <div class="tutorial-overlay" id="tutorialOverlay">
-    <div class="tutorial-content">
-      <div class="tutorial-cols">
-        <div class="tutorial-col">
-          <div class="tutorial-icon">🖱</div>
-          <p>鼠标在左侧区域滚动</p>
-          <p class="tutorial-sub">切换图片</p>
-        </div>
-        <div class="tutorial-divider"></div>
-        <div class="tutorial-col">
-          <div class="tutorial-icon">📄</div>
-          <p>右侧文字同步切换</p>
-          <p class="tutorial-sub">对应项目内容</p>
-        </div>
-      </div>
-      <p class="tutorial-press">按任意键或点击屏幕继续</p>
-    </div>
-  </div>
 </section>
 
 <section class="detail-stage" data-state="5">
@@ -1241,35 +1137,6 @@
 
   // Observe ALL sections including intro, tutorial and detail stages
   const allSections = document.querySelectorAll('.intro-stage, .stage, .detail-stage');
-  const tutorialOverlay = document.getElementById('tutorialOverlay');
-  let tutorialDone = false;
-
-  function enterTutorial() {
-    if (tutorialDone) return;
-    // Lock scroll
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    tutorialOverlay.classList.add('visible');
-
-    function dismiss() {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('click', onClick);
-      // Fade out tutorial
-      tutorialOverlay.classList.add('fade-out-tutorial');
-      setTimeout(() => {
-        // Unlock scroll
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-        tutorialOverlay.classList.remove('visible', 'fade-out-tutorial');
-        tutorialDone = true;
-      }, 400);
-    }
-
-    function onKey(e) { e.preventDefault(); dismiss(); }
-    function onClick(e) { e.preventDefault(); dismiss(); }
-    document.addEventListener('keydown', onKey);
-    document.addEventListener('click', onClick);
-  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1319,16 +1186,10 @@
           container.className = 'split-container state-2 entered stage-flipped';
         }
 
-        // Stage 4: show tutorial overlay on top of project experience
-        if (state === 4 && !tutorialDone) {
-          enterTutorial();
-        }
-
-        // Going back: reset flips + disable hover + reset tutorial
+        // Going back: reset flips + disable hover
         if (state < 3) {
           clearFlips();
           container.classList.remove('stage-flipped');
-          tutorialDone = false;
         }
 
         // Hint
