@@ -329,35 +329,42 @@
     opacity: 0;
   }
 
-  /* ======== Tutorial stage ======== */
-  .tutorial-stage {
-    height: 100vh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    position: relative;
-    z-index: 20;
+  /* ======== Tutorial overlay ======== */
+  .tutorial-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
   }
 
-  .tutorial-overlay {
+  .tutorial-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .tutorial-overlay.fade-out-tutorial {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .tutorial-content {
     text-align: center;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
   }
 
-  .tutorial-stage.visible .tutorial-overlay {
+  .tutorial-overlay.visible .tutorial-content {
     opacity: 1;
     transform: translateY(0);
-  }
-
-  .tutorial-stage.fade-out-tutorial .tutorial-overlay {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
   }
 
   .tutorial-cols {
@@ -852,10 +859,9 @@
       </div>
     </div>
   </div>
-</section>
 
-<section class="tutorial-stage" data-state="5" id="tutorialStage">
-  <div class="tutorial-overlay">
+  <!-- Tutorial overlay (inside project experience) -->
+  <div class="tutorial-overlay" id="tutorialOverlay">
     <div class="tutorial-content">
       <div class="tutorial-cols">
         <div class="tutorial-col">
@@ -870,12 +876,12 @@
           <p class="tutorial-sub">对应项目内容</p>
         </div>
       </div>
-      <p class="tutorial-press">按任意按键或点击屏幕继续</p>
+      <p class="tutorial-press">按任意键或点击屏幕继续</p>
     </div>
   </div>
 </section>
 
-<section class="detail-stage" data-state="6">
+<section class="detail-stage" data-state="5">
   <div class="detail-page">
     <div class="detail-photo">
       <img src="part_2.jpg" alt="">
@@ -919,7 +925,7 @@
   </div>
 </section>
 
-<section class="detail-stage" data-state="7">
+<section class="detail-stage" data-state="6">
   <div class="detail-page">
     <div class="detail-photo">
       <img src="part_3.jpg" alt="">
@@ -1168,8 +1174,8 @@
   }
 
   // Observe ALL sections including intro, tutorial and detail stages
-  const allSections = document.querySelectorAll('.intro-stage, .stage, .tutorial-stage, .detail-stage');
-  const tutorialStage = document.getElementById('tutorialStage');
+  const allSections = document.querySelectorAll('.intro-stage, .stage, .detail-stage');
+  const tutorialOverlay = document.getElementById('tutorialOverlay');
   let tutorialDone = false;
 
   function enterTutorial() {
@@ -1177,23 +1183,20 @@
     // Lock scroll
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    tutorialStage.classList.add('visible');
+    tutorialOverlay.classList.add('visible');
 
     function dismiss() {
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('click', onClick);
       // Fade out tutorial
-      tutorialStage.classList.add('fade-out-tutorial');
+      tutorialOverlay.classList.add('fade-out-tutorial');
       setTimeout(() => {
-        // Unlock scroll and move to next
+        // Unlock scroll
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
-        tutorialStage.classList.remove('visible', 'fade-out-tutorial');
+        tutorialOverlay.classList.remove('visible', 'fade-out-tutorial');
         tutorialDone = true;
-        // Scroll to next section
-        const nextStage = document.querySelector('.detail-stage[data-state="6"]');
-        if (nextStage) nextStage.scrollIntoView({ behavior: 'smooth' });
-      }, 500);
+      }, 400);
     }
 
     function onKey(e) { e.preventDefault(); dismiss(); }
@@ -1250,8 +1253,8 @@
           container.className = 'split-container state-2 entered stage-flipped';
         }
 
-        // Stage 5: tutorial
-        if (state === 5 && !tutorialDone) {
+        // Stage 4: show tutorial overlay on top of project experience
+        if (state === 4 && !tutorialDone) {
           enterTutorial();
         }
 
