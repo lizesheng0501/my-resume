@@ -883,43 +883,35 @@
 
 <section class="detail-stage" data-state="5">
   <div class="detail-page">
-    <div class="detail-photo">
-      <img src="part_2.jpg" alt="">
+    <div class="selector-panel" id="internSelectorPanel">
+      <div class="selector-stack" id="internSelectorStack">
+        <div class="selector-card active" data-index="0">
+          <img src="part_2.jpg" alt="">
+          <div class="card-glow"></div>
+          <div class="card-label">网易</div>
+        </div>
+      </div>
+      <div class="selector-hint">🖱 滚轮切换图片</div>
       <div class="detail-photo-info">
         <div class="name">李泽晟</div>
         <div class="info-line">实习经历 <span>·</span> INTERNSHIP</div>
       </div>
     </div>
-    <div class="detail-text">
+
+    <div class="detail-text" id="internDetailText">
       <h2>实习经历</h2>
       <p class="detail-subtitle">INTERNSHIP EXPERIENCE</p>
-
-      <div class="detail-entry">
-        <h3><span>01</span> 网易</h3>
-        <div class="company">用户运营实习生</div>
-        <ul>
-          <li>负责网易蜜蜂产品推广，在多平台发布图文内容引流，引导用户下载</li>
-          <li>负责平台内用户运营，内容日均浏览量约 500，累计拉新超 50 人</li>
-        </ul>
-      </div>
-
-      <div class="detail-entry">
-        <h3><span>02</span> 京东集团</h3>
-        <div class="company">渠道销售实习生</div>
-        <ul>
-          <li>协同招商部门拓展数码商家资源，推动 <span class="highlight">10 家</span> 数码商家成功入驻</li>
-          <li>负责京东旗下软件区域推广，提升推广人数、SKU 动销率与门店业绩</li>
-          <li>日均推广 <span class="highlight">6 人</span>，SKU 复购率 40%，门店销售业绩提升 <span class="highlight">6%</span></li>
-        </ul>
-      </div>
-
-      <div class="detail-entry">
-        <h3><span>03</span> 南京乐道汽车</h3>
-        <div class="company">汽车销售实习生</div>
-        <ul>
-          <li>快速掌握产品知识，在与 Model Y 等竞品竞争中完成线索获取与转化</li>
-          <li>独立讲解产品，多渠道拓客，每日完成留资目标，日均留资 <span class="highlight">4 条</span></li>
-        </ul>
+      <div class="text-panel active" data-text="0">
+        <div class="detail-entry">
+          <h3><span>01</span> 网易 · 用户运营实习生</h3>
+          <div class="company">产品推广 · 内容运营 · 校园合作</div>
+          <p>负责网易蜜蜂 App 的用户增长与内容运营，在抖音、快手、小红书等多平台发布图文内容引流，引导用户下载。同时拓展线下渠道，与学校社团联合举办活动，实现线上线下联动获客。</p>
+          <ul>
+            <li>多平台（抖音、快手、小红书）图文内容引流，内容日均浏览量约 <span class="highlight">500</span></li>
+            <li>线下与学校社团联合活动推广，拓宽获客渠道</li>
+            <li>平台内用户运营与维护，累计拉新超 <span class="highlight">50 人</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -1125,6 +1117,44 @@
   }
 
   if (panel) {
+    panel.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      if (e.deltaY > 0) {
+        setActive((activeIndex + 1) % totalCards);
+      } else {
+        setActive((activeIndex - 1 + totalCards) % totalCards);
+      }
+    });
+
+    panel.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+  }
+})();
+
+// ======== Game-like photo selector for internship ========
+(function() {
+  const panel = document.getElementById('internSelectorPanel');
+  const cards = document.querySelectorAll('#internSelectorStack .selector-card');
+  const textPanels = document.querySelectorAll('#internDetailText .text-panel');
+  let activeIndex = 0;
+  const totalCards = cards.length;
+
+  function setActive(index) {
+    if (totalCards <= 1) return;
+    if (index === activeIndex && cards[index].classList.contains('active')) return;
+    activeIndex = index;
+    cards.forEach((card, i) => {
+      card.classList.remove('active', 'inactive');
+      if (i === index) card.classList.add('active');
+      else card.classList.add('inactive');
+    });
+    textPanels.forEach((panel, i) => {
+      panel.classList.toggle('active', i === index);
+    });
+  }
+
+  if (panel && totalCards > 1) {
     panel.addEventListener('wheel', function(e) {
       e.preventDefault();
       if (e.deltaY > 0) {
