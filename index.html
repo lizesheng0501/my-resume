@@ -430,10 +430,9 @@
     position: relative;
     z-index: 21;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.42, 0, 0.58, 1),
-                transform 0.8s cubic-bezier(0.42, 0, 0.58, 1);
-    transition-delay: 0.15s;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.42, 0, 0.58, 1),
+                transform 0.5s cubic-bezier(0.42, 0, 0.58, 1);
   }
 
   .detail-stage.visible .detail-page {
@@ -1277,9 +1276,9 @@
       if (entry.isIntersecting) {
         const state = parseInt(entry.target.dataset.state);
 
-        // Crossfade: fade out cards, fade in detail pages
+        // Crossfade: fade out cards after detail page visible
         if (state >= 4) {
-          imageWrapper.classList.add('fade-out');
+          setTimeout(() => imageWrapper.classList.add('fade-out'), 150);
         } else {
           imageWrapper.classList.remove('fade-out');
         }
