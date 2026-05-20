@@ -329,7 +329,85 @@
     opacity: 0;
   }
 
-  /* ======== Detail stages (4-6) ======== */
+  /* ======== Tutorial stage ======== */
+  .tutorial-stage {
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+  }
+
+  .tutorial-overlay {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .tutorial-stage.visible .tutorial-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tutorial-stage.fade-out-tutorial .tutorial-overlay {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .tutorial-cols {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 60px;
+  }
+
+  .tutorial-col {
+    text-align: center;
+  }
+
+  .tutorial-col p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 2px;
+    line-height: 1.8;
+  }
+
+  .tutorial-col .tutorial-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  .tutorial-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .tutorial-divider {
+    width: 1px;
+    height: 80px;
+    background: rgba(255,255,255,0.12);
+  }
+
+  .tutorial-press {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 3px;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  /* ======== Detail stages (5-7) ======== */
   .detail-stage {
     height: 100vh;
     scroll-snap-align: start;
@@ -677,7 +755,27 @@
 <section class="stage" data-state="1"></section>
 <section class="stage" data-state="2"></section>
 <section class="stage" data-state="3"></section>
-<section class="detail-stage" data-state="4">
+<section class="tutorial-stage" data-state="4" id="tutorialStage">
+  <div class="tutorial-overlay">
+    <div class="tutorial-content">
+      <div class="tutorial-cols">
+        <div class="tutorial-col">
+          <div class="tutorial-icon">🖱</div>
+          <p>鼠标在左侧区域滚动</p>
+          <p class="tutorial-sub">切换图片</p>
+        </div>
+        <div class="tutorial-divider"></div>
+        <div class="tutorial-col">
+          <div class="tutorial-icon">📄</div>
+          <p>右侧文字同步切换</p>
+          <p class="tutorial-sub">对应项目内容</p>
+        </div>
+      </div>
+      <p class="tutorial-press">按任意按键继续</p>
+    </div>
+  </div>
+</section>
+<section class="detail-stage" data-state="5">
   <div class="detail-page">
     <!-- Left: photo selector -->
     <div class="selector-panel" id="selectorPanel">
@@ -776,7 +874,7 @@
   </div>
 </section>
 
-<section class="detail-stage" data-state="5">
+<section class="detail-stage" data-state="6">
   <div class="detail-page">
     <div class="detail-photo">
       <img src="part_2.jpg" alt="">
@@ -820,7 +918,7 @@
   </div>
 </section>
 
-<section class="detail-stage" data-state="6">
+<section class="detail-stage" data-state="7">
   <div class="detail-page">
     <div class="detail-photo">
       <img src="part_3.jpg" alt="">
@@ -1068,15 +1166,44 @@
     flipTimers.push(setTimeout(() => cardRight.classList.add('flipped'), 305));
   }
 
-  // Observe ALL sections including intro and detail stages
-  const allSections = document.querySelectorAll('.intro-stage, .stage, .detail-stage');
+  // Observe ALL sections including intro, tutorial and detail stages
+  const allSections = document.querySelectorAll('.intro-stage, .stage, .tutorial-stage, .detail-stage');
+  const tutorialStage = document.getElementById('tutorialStage');
+  let tutorialDone = false;
+
+  function enterTutorial() {
+    if (tutorialDone) return;
+    // Lock scroll
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    tutorialStage.classList.add('visible');
+
+    function onKey(e) {
+      e.preventDefault();
+      document.removeEventListener('keydown', onKey);
+      // Fade out tutorial
+      tutorialStage.classList.add('fade-out-tutorial');
+      setTimeout(() => {
+        // Unlock scroll and move to next
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        tutorialStage.classList.remove('visible', 'fade-out-tutorial');
+        tutorialDone = true;
+        // Scroll to next section
+        const nextStage = document.querySelector('.detail-stage[data-state="5"]');
+        if (nextStage) nextStage.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+    document.addEventListener('keydown', onKey);
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const state = parseInt(entry.target.dataset.state);
 
         // Crossfade: fade out cards, fade in detail pages
-        if (state >= 4) {
+        if (state >= 5) {
           imageWrapper.classList.add('fade-out');
         } else {
           imageWrapper.classList.remove('fade-out');
@@ -1118,10 +1245,16 @@
           container.className = 'split-container state-2 entered stage-flipped';
         }
 
-        // Going back: reset flips + disable hover
+        // Stage 4: tutorial
+        if (state === 4 && !tutorialDone) {
+          enterTutorial();
+        }
+
+        // Going back: reset flips + disable hover + reset tutorial
         if (state < 3) {
           clearFlips();
           container.classList.remove('stage-flipped');
+          tutorialDone = false;
         }
 
         // Hint
