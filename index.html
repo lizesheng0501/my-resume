@@ -566,6 +566,26 @@
     top: auto; left: auto; right: auto;
   }
 
+  /* Detail photo panel (for non-selector pages: education) */
+  .detail-photo {
+    flex: 0 0 38%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5,5,5,0.5);
+    padding: 50px 30px;
+    gap: 30px;
+  }
+
+  .detail-photo img {
+    width: 70%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+  }
+
   .detail-photo-info {
     text-align: center;
   }
