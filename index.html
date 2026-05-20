@@ -755,27 +755,7 @@
 <section class="stage" data-state="1"></section>
 <section class="stage" data-state="2"></section>
 <section class="stage" data-state="3"></section>
-<section class="tutorial-stage" data-state="4" id="tutorialStage">
-  <div class="tutorial-overlay">
-    <div class="tutorial-content">
-      <div class="tutorial-cols">
-        <div class="tutorial-col">
-          <div class="tutorial-icon">🖱</div>
-          <p>鼠标在左侧区域滚动</p>
-          <p class="tutorial-sub">切换图片</p>
-        </div>
-        <div class="tutorial-divider"></div>
-        <div class="tutorial-col">
-          <div class="tutorial-icon">📄</div>
-          <p>右侧文字同步切换</p>
-          <p class="tutorial-sub">对应项目内容</p>
-        </div>
-      </div>
-      <p class="tutorial-press">按任意按键继续</p>
-    </div>
-  </div>
-</section>
-<section class="detail-stage" data-state="5">
+<section class="detail-stage" data-state="4">
   <div class="detail-page">
     <!-- Left: photo selector -->
     <div class="selector-panel" id="selectorPanel">
@@ -870,6 +850,27 @@
           </ul>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="tutorial-stage" data-state="5" id="tutorialStage">
+  <div class="tutorial-overlay">
+    <div class="tutorial-content">
+      <div class="tutorial-cols">
+        <div class="tutorial-col">
+          <div class="tutorial-icon">🖱</div>
+          <p>鼠标在左侧区域滚动</p>
+          <p class="tutorial-sub">切换图片</p>
+        </div>
+        <div class="tutorial-divider"></div>
+        <div class="tutorial-col">
+          <div class="tutorial-icon">📄</div>
+          <p>右侧文字同步切换</p>
+          <p class="tutorial-sub">对应项目内容</p>
+        </div>
+      </div>
+      <p class="tutorial-press">按任意按键或点击屏幕继续</p>
     </div>
   </div>
 </section>
@@ -1178,9 +1179,9 @@
     document.body.style.overflow = 'hidden';
     tutorialStage.classList.add('visible');
 
-    function onKey(e) {
-      e.preventDefault();
+    function dismiss() {
       document.removeEventListener('keydown', onKey);
+      document.removeEventListener('click', onClick);
       // Fade out tutorial
       tutorialStage.classList.add('fade-out-tutorial');
       setTimeout(() => {
@@ -1190,11 +1191,15 @@
         tutorialStage.classList.remove('visible', 'fade-out-tutorial');
         tutorialDone = true;
         // Scroll to next section
-        const nextStage = document.querySelector('.detail-stage[data-state="5"]');
+        const nextStage = document.querySelector('.detail-stage[data-state="6"]');
         if (nextStage) nextStage.scrollIntoView({ behavior: 'smooth' });
       }, 500);
     }
+
+    function onKey(e) { e.preventDefault(); dismiss(); }
+    function onClick(e) { e.preventDefault(); dismiss(); }
     document.addEventListener('keydown', onKey);
+    document.addEventListener('click', onClick);
   }
 
   const observer = new IntersectionObserver((entries) => {
@@ -1203,7 +1208,7 @@
         const state = parseInt(entry.target.dataset.state);
 
         // Crossfade: fade out cards, fade in detail pages
-        if (state >= 5) {
+        if (state >= 4) {
           imageWrapper.classList.add('fade-out');
         } else {
           imageWrapper.classList.remove('fade-out');
@@ -1245,8 +1250,8 @@
           container.className = 'split-container state-2 entered stage-flipped';
         }
 
-        // Stage 4: tutorial
-        if (state === 4 && !tutorialDone) {
+        // Stage 5: tutorial
+        if (state === 5 && !tutorialDone) {
           enterTutorial();
         }
 
