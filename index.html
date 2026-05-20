@@ -90,7 +90,6 @@
   .stage {
     height: 100vh;
     scroll-snap-align: start;
-    scroll-snap-stop: always;
     background: #000;
   }
 
@@ -952,8 +951,14 @@
 
 <section class="detail-stage" data-state="6">
   <div class="detail-page">
-    <div class="detail-photo">
-      <img src="part_3.jpg" alt="">
+    <div class="selector-panel" id="eduSelectorPanel">
+      <div class="selector-stack" id="eduSelectorStack">
+        <div class="selector-card active" data-index="0">
+          <img src="part_3.jpg" alt="">
+          <div class="card-glow"></div>
+          <div class="card-label">教育经历</div>
+        </div>
+      </div>
       <div class="detail-photo-info">
         <div class="name">李泽晟</div>
         <div class="info-line">教育经历 <span>·</span> EDUCATION</div>
@@ -1277,12 +1282,16 @@
           imageWrapper.classList.remove('fade-out');
         }
 
-        // Add visible class to detail stages for fade-in
+        // Add visible class to detail stages for fade-in (add before remove)
         document.querySelectorAll('.detail-stage').forEach(ds => {
           const dsState = parseInt(ds.dataset.state);
           if (dsState === state) {
             ds.classList.add('visible');
-          } else {
+          }
+        });
+        document.querySelectorAll('.detail-stage').forEach(ds => {
+          const dsState = parseInt(ds.dataset.state);
+          if (dsState !== state) {
             ds.classList.remove('visible');
           }
         });
