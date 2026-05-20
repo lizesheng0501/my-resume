@@ -1141,12 +1141,19 @@
       item.style.transform = '';
     });
     expandedItem = null;
+    // Re-enable scrolling
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
   }
 
   function expandItem(item) {
     document.querySelectorAll('.split-item').forEach(s => {
       if (s !== item) s.classList.add('dimmed');
     });
+
+    // Lock scroll
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 
     const rect = item.getBoundingClientRect();
     const cx = window.innerWidth / 2;
