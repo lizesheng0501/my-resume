@@ -1323,8 +1323,20 @@
     maskLayer.style.webkitMaskImage = 'radial-gradient(circle 100px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
   });
 
-  // Default mask at center
+  // Default mask at center when leaving intro stage
   introStage.addEventListener('mouseleave', function() {
+    maskLayer.style.maskImage = 'radial-gradient(circle 100px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 100px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
+  });
+
+  // Remove mask when mouse leaves the page entirely
+  document.addEventListener('mouseleave', function() {
+    maskLayer.style.maskImage = 'none';
+    maskLayer.style.webkitMaskImage = 'none';
+  });
+
+  // Restore mask when mouse enters the page
+  document.addEventListener('mouseenter', function() {
     maskLayer.style.maskImage = 'radial-gradient(circle 100px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
     maskLayer.style.webkitMaskImage = 'radial-gradient(circle 100px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
   });
