@@ -305,28 +305,69 @@
     transform: rotateY(180deg);
   }
 
-  /* ======== Intro section ======== */
+  /* ======== Intro - dual layer mask ======== */
   .intro-stage {
     height: 100vh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     overflow: hidden;
   }
 
-  .intro-text {
-    font-size: clamp(32px, 5vw, 64px);
-    font-weight: 300;
-    letter-spacing: 4px;
-    color: #fff;
-    opacity: 1;
-    transition: opacity 0.5s ease;
+  /* Bottom layer: white bg + black text */
+  .intro-layer-bottom {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
   }
 
-  .intro-text.fade-out {
-    opacity: 0;
+  .intro-layer-bottom .intro-text-cn {
+    font-size: clamp(24px, 3.5vw, 48px);
+    font-weight: 400;
+    letter-spacing: 6px;
+    color: #000;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* Top layer: inverted photo + white text, masked by circle */
+  .intro-layer-top {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    mask-image: radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 30%, black 100%);
+    -webkit-mask-image: radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 30%, black 100%);
+  }
+
+  .intro-bg-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: invert(1);
+    opacity: 0.8;
+  }
+
+  .intro-text-en {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(28px, 4vw, 56px);
+    font-weight: 300;
+    letter-spacing: 6px;
+    color: #fff;
+    text-align: center;
+    line-height: 1.5;
+    text-shadow: 0 0 40px rgba(255,255,255,0.3);
   }
 
   /* ======== Tutorial overlay ======== */
@@ -781,8 +822,16 @@
 <body>
 
 <!-- Intro -->
-<section class="intro-stage" data-state="0">
-  <h1 class="intro-text" id="introText">This is my resume.</h1>
+<section class="intro-stage" data-state="0" id="introStage">
+  <!-- Bottom: white bg + black Chinese -->
+  <div class="intro-layer-bottom">
+    <p class="intro-text-cn">你好<br>我是李泽晟</p>
+  </div>
+  <!-- Top: inverted photo + white English, masked -->
+  <div class="intro-layer-top" id="introMaskLayer">
+    <img class="intro-bg-img" src="111.jpg" alt="">
+    <p class="intro-text-en">HELLO I'M<br>LI ZESHENG</p>
+  </div>
 </section>
 
 <!-- Trigger stages -->
@@ -1227,6 +1276,27 @@
 <div class="scroll-hint" id="hint">向下滚动</div>
 
 <script>
+// ======== Mouse mask / spotlight effect for intro ========
+(function() {
+  const introStage = document.getElementById('introStage');
+  const maskLayer = document.getElementById('introMaskLayer');
+  if (!introStage || !maskLayer) return;
+
+  introStage.addEventListener('mousemove', function(e) {
+    const rect = introStage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    maskLayer.style.maskImage = 'radial-gradient(circle 180px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 30%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 180px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 30%, black 100%)';
+  });
+
+  // Default mask at center
+  introStage.addEventListener('mouseleave', function() {
+    maskLayer.style.maskImage = 'radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 30%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 30%, black 100%)';
+  });
+})();
+
 // ======== Game-like photo selector for project experience ========
 (function() {
   const panel = document.getElementById('selectorPanel');
@@ -1341,7 +1411,6 @@
   const container = document.getElementById('splitContainer');
   const imageWrapper = document.getElementById('imageWrapper');
   const hint = document.getElementById('hint');
-  const introText = document.getElementById('introText');
   const introStage = document.querySelector('.intro-stage');
   const stages = document.querySelectorAll('.stage');
 
@@ -1427,7 +1496,6 @@
         // Stage 0: intro — hide cards
         if (state === 0) {
           container.classList.remove('entered');
-          introText.classList.remove('fade-out');
           cardsEntered = false;
         }
 
@@ -1435,7 +1503,6 @@
         if (state === 1 && !cardsEntered) {
           container.classList.add('entered');
           container.className = container.className.replace(/state-\d/g, '') + ' split-container state-1 entered';
-          introText.classList.add('fade-out');
           cardsEntered = true;
         }
 
