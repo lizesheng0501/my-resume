@@ -345,8 +345,8 @@
     align-items: center;
     justify-content: center;
     z-index: 2;
-    mask-image: radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 99%, black 100%);
-    -webkit-mask-image: radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 99%, black 100%);
+    mask-image: radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 99%, black 100%);
+    -webkit-mask-image: radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 99%, black 100%);
   }
 
   /* Galaxy overlay for top layer to match body bg */
@@ -863,7 +863,7 @@
   </div>
   <!-- Top: galaxy bg + white English, masked -->
   <div class="intro-layer-top" id="introMaskLayer">
-    <p class="intro-text-en">HELLO I'M<br>LI ZESHENG</p>
+    <p class="intro-text-en">HELLO I'M<br>LI&nbsp;&nbsp;&nbsp;&nbsp;ZESHENG</p>
   </div>
 </section>
 
@@ -1319,14 +1319,14 @@
     const rect = introStage.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    maskLayer.style.maskImage = 'radial-gradient(circle 280px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
-    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 280px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.maskImage = 'radial-gradient(circle 180px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 180px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
   });
 
   // Default mask at center
   introStage.addEventListener('mouseleave', function() {
-    maskLayer.style.maskImage = 'radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
-    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 280px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.maskImage = 'radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle 180px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
   });
 })();
 
