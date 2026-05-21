@@ -309,11 +309,9 @@
   .intro-stage {
     height: 100vh;
     scroll-snap-align: start;
-    scroll-snap-stop: always;
     position: relative;
     overflow: hidden;
     cursor: none;
-    transition: opacity 0.3s ease;
   }
 
   /* Bottom layer: white bg + black text */
@@ -347,8 +345,8 @@
     align-items: center;
     justify-content: center;
     z-index: 2;
-    mask-image: radial-gradient(circle 100px at 50% 50%, transparent 0%, transparent 99%, black 100%);
-    -webkit-mask-image: radial-gradient(circle 100px at 50% 50%, transparent 0%, transparent 99%, black 100%);
+    mask-image: radial-gradient(circle 80px at 50% 50%, transparent 0%, transparent 99%, black 100%);
+    -webkit-mask-image: radial-gradient(circle 80px at 50% 50%, transparent 0%, transparent 99%, black 100%);
   }
 
   /* Galaxy overlay for top layer to match body bg */
@@ -1317,19 +1315,19 @@
   const maskLayer = document.getElementById('introMaskLayer');
   if (!introStage || !maskLayer) return;
 
-  let mouseX = -1, mouseY = -1;
-  let baseSize = 100;
+  const size = 80;
 
   introStage.addEventListener('mousemove', function(e) {
     const rect = introStage.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
-    updateMask();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    maskLayer.style.maskImage = 'radial-gradient(circle ' + size + 'px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle ' + size + 'px at ' + x + 'px ' + y + 'px, transparent 0%, transparent 99%, black 100%)';
   });
 
   introStage.addEventListener('mouseleave', function() {
-    mouseX = -1; mouseY = -1;
-    updateMask();
+    maskLayer.style.maskImage = 'radial-gradient(circle ' + size + 'px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle ' + size + 'px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
   });
 
   document.addEventListener('mouseleave', function() {
@@ -1338,35 +1336,9 @@
   });
 
   document.addEventListener('mouseenter', function() {
-    updateMask();
+    maskLayer.style.maskImage = 'radial-gradient(circle ' + size + 'px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
+    maskLayer.style.webkitMaskImage = 'radial-gradient(circle ' + size + 'px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
   });
-
-  function updateMask() {
-    const size = baseSize;
-    if (mouseX < 0 || mouseY < 0) {
-      maskLayer.style.maskImage = 'radial-gradient(circle ' + size + 'px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
-      maskLayer.style.webkitMaskImage = 'radial-gradient(circle ' + size + 'px at 50% 50%, transparent 0%, transparent 99%, black 100%)';
-    } else {
-      maskLayer.style.maskImage = 'radial-gradient(circle ' + size + 'px at ' + mouseX + 'px ' + mouseY + 'px, transparent 0%, transparent 99%, black 100%)';
-      maskLayer.style.webkitMaskImage = 'radial-gradient(circle ' + size + 'px at ' + mouseX + 'px ' + mouseY + 'px, transparent 0%, transparent 99%, black 100%)';
-    }
-  }
-
-  // Scroll-driven circle expansion for game-like transition
-  window.addEventListener('scroll', function() {
-    const rect = introStage.getBoundingClientRect();
-    const viewH = window.innerHeight;
-    const scrollProgress = Math.max(0, Math.min(1, -rect.top / viewH));
-    // Circle grows from 100px → fills screen
-    baseSize = 100 + scrollProgress * Math.max(viewH, window.innerWidth) * 1.5;
-    updateMask();
-    // Fade out intro when scrolled past 80%
-    if (scrollProgress > 0.8) {
-      introStage.style.opacity = 1 - (scrollProgress - 0.8) / 0.2;
-    } else {
-      introStage.style.opacity = 1;
-    }
-  }, { passive: true });
 })();
 
 // ======== Game-like photo selector for project experience ========
