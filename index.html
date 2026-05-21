@@ -1003,11 +1003,32 @@
     <div class="selector-panel" id="eduSelectorPanel">
       <div class="selector-stack" id="eduSelectorStack">
         <div class="selector-card active" data-index="0">
-          <img src="part_3.jpg" alt="">
+          <img src="微信图片_20260521233645_27_42.jpg" alt="">
           <div class="card-glow"></div>
-          <div class="card-label">教育经历</div>
+          <div class="card-label">照片 1</div>
+        </div>
+        <div class="selector-card" data-index="1">
+          <img src="微信图片_20260521233842_28_42.jpg" alt="">
+          <div class="card-glow"></div>
+          <div class="card-label">照片 2</div>
+        </div>
+        <div class="selector-card" data-index="2">
+          <img src="微信图片_20260521233924_29_42.jpg" alt="">
+          <div class="card-glow"></div>
+          <div class="card-label">照片 3</div>
+        </div>
+        <div class="selector-card" data-index="3">
+          <img src="微信图片_20260521235754_30_42.jpg" alt="">
+          <div class="card-glow"></div>
+          <div class="card-label">照片 4</div>
+        </div>
+        <div class="selector-card" data-index="4">
+          <img src="微信图片_20260522001626_31_42.jpg" alt="">
+          <div class="card-glow"></div>
+          <div class="card-label">照片 5</div>
         </div>
       </div>
+      <div class="selector-hint">🖱 滚轮切换图片</div>
       <div class="detail-photo-info">
         <div class="name">李泽晟</div>
         <div class="info-line">教育经历 <span>·</span> EDUCATION</div>
@@ -1258,6 +1279,40 @@
     });
     textPanels.forEach((panel, i) => {
       panel.classList.toggle('active', i === index);
+    });
+  }
+
+  if (panel && totalCards > 1) {
+    panel.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      if (e.deltaY > 0) {
+        setActive((activeIndex + 1) % totalCards);
+      } else {
+        setActive((activeIndex - 1 + totalCards) % totalCards);
+      }
+    });
+
+    panel.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+  }
+})();
+
+// ======== Game-like photo selector for education ========
+(function() {
+  const panel = document.getElementById('eduSelectorPanel');
+  const cards = document.querySelectorAll('#eduSelectorStack .selector-card');
+  let activeIndex = 0;
+  const totalCards = cards.length;
+
+  function setActive(index) {
+    if (totalCards <= 1) return;
+    if (index === activeIndex && cards[index].classList.contains('active')) return;
+    activeIndex = index;
+    cards.forEach((card, i) => {
+      card.classList.remove('active', 'inactive');
+      if (i === index) card.classList.add('active');
+      else card.classList.add('inactive');
     });
   }
 
