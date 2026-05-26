@@ -12,7 +12,7 @@
   }
 
   html {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
 
@@ -90,6 +90,7 @@
   .stage {
     height: 100vh;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     background: #000;
   }
 
@@ -308,6 +309,8 @@
   /* ======== Intro - dual layer mask ======== */
   .intro-stage {
     height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     position: relative;
     overflow: hidden;
     cursor: none;
@@ -516,6 +519,7 @@
   .detail-stage {
     height: 100vh;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     position: relative;
     z-index: 20;
     background: rgba(0,0,0,0.5);
